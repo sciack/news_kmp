@@ -1,6 +1,3 @@
-import org.jetbrains.compose.compose
-
-
 plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
@@ -39,6 +36,8 @@ kotlin {
 
 
     sourceSets {
+        val ktorVersion = "2.3.3"
+        val loggingVersion = "1.3.0"
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
@@ -47,7 +46,11 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                api("org.lighthousegames:logging:$loggingVersion")
             }
         }
 
@@ -59,6 +62,7 @@ kotlin {
                 implementation(kotlin("test-junit"))
                 implementation(kotlin("test-annotations-common"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+                implementation("io.ktor:ktor-client-mock:$ktorVersion")
             }
         }
 
@@ -67,6 +71,8 @@ kotlin {
                 api("androidx.activity:activity-compose:1.6.1")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.9.0")
+                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
             }
         }
 
@@ -89,10 +95,15 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+            }
         }
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+                implementation("ch.qos.logback:logback-classic:1.4.7")
             }
             jvmToolchain {
                 this.languageVersion = JavaLanguageVersion.of(17)
@@ -105,7 +116,7 @@ kotlin {
 
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.uiTestJUnit4)
-
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
             }
         }
     }
@@ -128,6 +139,9 @@ android {
     }
     kotlin {
         jvmToolchain(11)
+    }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
     }
 }
 
