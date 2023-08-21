@@ -24,6 +24,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageVersion = version.toString().substringBefore('-')
+            packageName = "News"
 
             macOS {
                 packageVersion = "1.0.0" //mac doesn't allow version < 1
