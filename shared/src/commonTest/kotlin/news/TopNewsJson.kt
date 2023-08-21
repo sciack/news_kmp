@@ -1,3 +1,6 @@
+package news
+
+val topNewsJson = """
 {
   "status": "ok",
   "totalResults": 87,
@@ -13,7 +16,7 @@
       "url": "https://www.wsj.com/finance/banking/mortgage-jumbo-loan-interest-rates-wealthy-a84e87d3",
       "urlToImage": "https://images.wsj.net/im-837888/social",
       "publishedAt": "2023-08-21T04:00:00Z",
-      "content": "Sheila Smith was set to get a mortgage for about $750,000 to buy an investment property in Sedona, Ariz., earlier this year. The lender, a regional bank, offered a starting interest rate of about 5%,… [+127 chars]"
+      "content": "Sheila Smith was set to get a mortgage for about ${'$'}750,000 to buy an investment property in Sedona, Ariz., earlier this year. The lender, a regional bank, offered a starting interest rate of about 5%,… [+127 chars]"
     },
     {
       "source": {
@@ -203,7 +206,7 @@
         "name": "The Wall Street Journal"
       },
       "author": "Dave Sebastian",
-      "title": "Cosmetics Billionaire Mulls $4.9 Billion-Plus Buyout of L'Occitane",
+      "title": "Cosmetics Billionaire Mulls ${'$'}4.9 Billion-Plus Buyout of L'Occitane",
       "description": "Key stock indexes in Asia fell Monday",
       "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-jones-08-14-2023",
       "urlToImage": "https://images.wsj.net/im-834974/social",
@@ -442,7 +445,7 @@
       "url": "https://www.wsj.com/livecoverage/stock-market-today-dow-jones-08-07-2023",
       "urlToImage": "https://images.wsj.net/im-829033/social",
       "publishedAt": "2023-08-07T08:41:43Z",
-      "content": "Berkshire Hathaway (BRK.B, BRK.A): Warren Buffetts conglomerate swung to a second-quarter profit of $35.9 billion, boosted by its insurance division and strong gains in its massive investment portfol… [+540 chars]"
+      "content": "Berkshire Hathaway (BRK.B, BRK.A): Warren Buffetts conglomerate swung to a second-quarter profit of ${'$'}35.9 billion, boosted by its insurance division and strong gains in its massive investment portfol… [+540 chars]"
     },
     {
       "source": {
@@ -567,12 +570,12 @@
         "name": "The Wall Street Journal"
       },
       "author": "wsj",
-      "title": "Mystery Buyer Pays $140 Million for Connecticut's Most Expensive Home!",
+      "title": "Mystery Buyer Pays ${'$'}140 Million for Connecticut's Most Expensive Home!",
       "description": "Copper Beech Farm in Greenwich is also one of the priciest properties to close in the U.S.",
       "url": "https://www.wsj.com/articles/mystery-buyer-pays-138-83-million-for-connecticuts-most-expensive-home-4d699afc",
       "urlToImage": "https://images.wsj.net/im-718632/social",
       "publishedAt": "2023-08-03T01:00:03Z",
-      "content": "WSJ News Exclusive | Mystery Buyer Pays $138.83 Million for Connecticut’s Most Expensive HomeBe the first to know about the biggest and best luxury home sales and listings by signing up for our Mansi… [+702 chars]"
+      "content": "WSJ News Exclusive | Mystery Buyer Pays ${'$'}138.83 Million for Connecticut’s Most Expensive HomeBe the first to know about the biggest and best luxury home sales and listings by signing up for our Mansi… [+702 chars]"
     },
     {
       "source": {
@@ -724,7 +727,7 @@
       },
       "author": "wsj",
       "title": "Local Malls, Stuck in 'Death Spiral,' Plunge in Value...",
-      "description": "Crystal Mall in Connecticut, worth $150 million in 2012, recently sold for $9.5 million",
+      "description": "Crystal Mall in Connecticut, worth ${'$'}150 million in 2012, recently sold for ${'$'}9.5 million",
       "url": "https://www.wsj.com/articles/local-malls-stuck-in-death-spiral-plunge-in-value-a7998b7d",
       "urlToImage": "https://images.wsj.net/im-823519/social",
       "publishedAt": "2023-07-31T19:00:04Z",
@@ -910,7 +913,7 @@
       "url": "https://www.wsj.com/livecoverage/fed-meeting-interest-rate-decision-today-july-2023",
       "urlToImage": "https://images.wsj.net/im-823829/social",
       "publishedAt": "2023-07-26T07:15:24Z",
-      "content": "Deutsche Bank reported a fall in quarterly profit on higher costs. But it will resume share buybacks as revenue continues to rise. Net profit fell 22% to 940 million, or about $1 billion, topping con… [+598 chars]"
+      "content": "Deutsche Bank reported a fall in quarterly profit on higher costs. But it will resume share buybacks as revenue continues to rise. Net profit fell 22% to 940 million, or about ${'$'}1 billion, topping con… [+598 chars]"
     },
     {
       "source": {
@@ -1135,3 +1138,4 @@
     }
   ]
 }
+"""
