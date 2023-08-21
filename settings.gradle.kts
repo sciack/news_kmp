@@ -1,4 +1,4 @@
-rootProject.name = "MyApplication"
+rootProject.name = "news"
 
 include(":androidApp")
 include(":shared")
@@ -24,6 +24,7 @@ pluginManagement {
         id("com.android.library").version(agpVersion)
 
         id("org.jetbrains.compose").version(composeVersion)
+        id("com.github.jmongard.git-semver-plugin").version("0.4.2")
     }
 }
 

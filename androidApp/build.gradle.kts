@@ -15,6 +15,11 @@ kotlin {
     }
 }
 
+val versionNumber: Int by extra
+
+logger.warn("Version number $versionNumber")
+logger.warn("Version $version")
+
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
     namespace = "com.myapplication"
@@ -22,11 +27,11 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
     defaultConfig {
-        applicationId = "com.myapplication.MyApplication"
+        applicationId = "com.github.sciack.news"
         minSdk = (findProperty("android.minSdk") as String).toInt()
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = versionNumber
+        versionName = "$version"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
