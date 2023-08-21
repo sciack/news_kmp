@@ -11,8 +11,10 @@ plugins {
     id("org.jetbrains.kotlinx.kover") version "0.7.2"
 }
 
+val currentVersion = version
 kotlin {
     val composeVersion = extra["compose.version"] as String
+
     androidTarget()
 
     jvm("desktop")
@@ -22,9 +24,9 @@ kotlin {
     iosSimulatorArm64()
 
     cocoapods {
-        version = "1.0.0"
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
+        version = currentVersion.toString().substringBefore('-')
+        summary = "KNews shared version"
+        homepage = "https://github.com/sciack/news_kmp"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
         framework {
@@ -101,8 +103,6 @@ kotlin {
             dependencies {
                 dependsOn(desktopMain)
 
-                //implementation("io.mockk:mockk:1.13.4")
-                // Compose
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.uiTestJUnit4)
 
@@ -121,7 +121,6 @@ android {
 
     defaultConfig {
         minSdk = (findProperty("android.minSdk") as String).toInt()
-        targetSdk = (findProperty("android.targetSdk") as String).toInt()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

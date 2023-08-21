@@ -5,4 +5,17 @@ plugins {
     id("com.android.application").apply(false)
     id("com.android.library").apply(false)
     id("org.jetbrains.compose").apply(false)
+    id("com.github.jmongard.git-semver-plugin")
+}
+
+val versionNumber =
+    with(semver.semVersion) {
+        major * 10_000 + minor * 100 + patch
+    }
+val currentVersion = semver.version
+
+allprojects {
+    extra["versionNumber"] = versionNumber
+    version  = currentVersion
+
 }
