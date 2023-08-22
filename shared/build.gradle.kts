@@ -38,6 +38,7 @@ kotlin {
     sourceSets {
         val ktorVersion = "2.3.3"
         val loggingVersion = "1.3.0"
+        val voyagerVersion = "1.0.0-rc05"
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
@@ -51,6 +52,9 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
                 api("org.lighthousegames:logging:$loggingVersion")
+                implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+                implementation("com.russhwolf:multiplatform-settings:1.0.0")
+                implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
             }
         }
 
@@ -73,6 +77,7 @@ kotlin {
                 api("androidx.core:core-ktx:1.9.0")
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+                implementation("cafe.adriel.voyager:voyager-androidx:$voyagerVersion")
             }
         }
 
