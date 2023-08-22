@@ -1,7 +1,10 @@
 package news
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -9,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
@@ -19,7 +23,7 @@ import com.russhwolf.settings.set
 
 class SettingsModel : ScreenModel {
 
-    val apiKey = mutableStateOf(apiKey())
+    val apiKey = mutableStateOf(CurrentSettings.apiKey)
 }
 
 class SettingsScreen : Screen {
@@ -39,17 +43,35 @@ class SettingsScreen : Screen {
                 },
                 label = { Text("ApiKey") }
             )
-            Button(onClick = {
-                settings.set("apiKey", apiKey.value)
-                navigator.pop()
-            }) {
-                Text("Confirm")
+            Row {
+                Button(onClick = {
+                    CurrentSettings.apiKey = apiKey.value
+                    navigator.pop()
+                }) {
+                    Text("Confirm")
+                }
+                Spacer(Modifier.width(12.dp))
+                Button(onClick = {
+                    navigator.pop()
+                }) {
+                    Text("Cancel")
+                }
             }
         }
+
     }
 }
 
-val settings: Settings = Settings()
 
-fun apiKey(): String =
-    settings.getString("apiKey", "")
+object CurrentSettings {
+    private val settings: Settings = Settings()
+
+    var apiKey: String
+        get() = settings.getString("apiKey", "")
+
+
+        set(value) {
+            settings["apiKey"] = value
+        }
+}
+
