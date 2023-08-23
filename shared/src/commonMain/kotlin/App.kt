@@ -10,6 +10,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +36,15 @@ fun App() {
                     TopAppBar(
                         title = {
                             Text("News")
+                        },
+                        navigationIcon = {
+                            if (navigator.canPop) {
+                                IconButton(onClick = {
+                                    navigator.pop()
+                                }) {
+                                    Icon(Icons.Default.ArrowBack, "Back")
+                                }
+                            }
                         },
                         actions = {
 
