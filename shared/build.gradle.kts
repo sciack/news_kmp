@@ -38,7 +38,8 @@ kotlin {
     sourceSets {
         val ktorVersion = "2.3.3"
         val loggingVersion = "1.3.0"
-        val voyagerVersion = "1.0.0-rc05"
+        val voyagerVersion = "1.0.0-rc06"
+        val coroutineVersion = "1.7.3"
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
@@ -50,7 +51,7 @@ kotlin {
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
                 api("org.lighthousegames:logging:$loggingVersion")
                 implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
                 implementation("com.russhwolf:multiplatform-settings:1.0.0")
@@ -65,7 +66,7 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-junit"))
                 implementation(kotlin("test-annotations-common"))
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVersion")
                 implementation("io.ktor:ktor-client-mock:$ktorVersion")
             }
         }
@@ -76,7 +77,7 @@ kotlin {
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.9.0")
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
                 implementation("cafe.adriel.voyager:voyager-androidx:$voyagerVersion")
             }
         }
@@ -121,7 +122,7 @@ kotlin {
 
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.uiTestJUnit4)
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.3")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutineVersion")
             }
         }
     }
