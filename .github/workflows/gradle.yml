@@ -58,6 +58,10 @@ jobs:
       uses: gradle/gradle-build-action@v2.6.0 # v2.6.0
       with:
         arguments: check koverXmlReport
+    - name: Try to build the desktop verson
+      uses: gradle/gradle-build-action@v2.6.0 # v2.6.0
+      with:
+        arguments: packageDistributionForCurrentOS
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
