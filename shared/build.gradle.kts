@@ -110,9 +110,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-cio:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:1.4.7")
             }
-            jvmToolchain {
-                this.languageVersion = JavaLanguageVersion.of(17)
-            }
         }
 
         val desktopTest by getting {
