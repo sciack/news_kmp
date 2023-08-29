@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.application")
     id("org.jetbrains.compose")
+    id("com.google.gms.google-services")
 }
 
 kotlin {
@@ -10,6 +11,10 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":shared"))
+                implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+                implementation("com.google.firebase:firebase-analytics-ktx")
+                implementation("com.google.firebase:firebase-auth")
+                implementation("com.google.firebase:firebase-firestore")
             }
         }
     }

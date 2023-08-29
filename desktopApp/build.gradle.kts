@@ -23,7 +23,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageVersion = version.toString().substringBefore('-')
+            packageVersion = "1.0.0"
             packageName = "News"
 
         }
