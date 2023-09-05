@@ -48,3 +48,4 @@ jobs:
           certificate-password: ${{ secrets.APPLE_DEV_CERT_PASSWORD }}
           export-options: iosApp/exportOptionsRelease.plist
           export-method: "app-store"
+          build-sdk: "iOS 16.2"
