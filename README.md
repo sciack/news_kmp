@@ -99,6 +99,14 @@ The `androidApp` module depends on and uses the `shared` module as a regular And
 This is an Xcode project that builds into an iOS application.
 It depends on and uses the `shared` module as a CocoaPods dependency.
 
+#### `XCode`
+By default XCode doesn't read environment variable defined in `zsh`, my suggestion is to put run this command:
+```bash
+launchctl setenv JAVA_HOME $JAVA_HOME
+```
+
+so JAVA home will be accessible and available when xcode trigger gradle build.
+
 ## Run your application
 
 ### On desktop
