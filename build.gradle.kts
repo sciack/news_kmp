@@ -1,3 +1,5 @@
+import kotlin.io.path.writeText
+
 plugins {
     // this is necessary to avoid the plugins to be loaded multiple times
     // in each subproject's classloader
@@ -19,4 +21,16 @@ allprojects {
     extra["versionNumber"] = versionNumber
     version  = currentVersion
 
+}
+
+tasks {
+    register("versionEnv") {
+        doLast {
+            val versions = """
+                export APP_VERSION_NAME=${currentVersion}
+                export APP_VERSION_CODE=$versionNumber
+            """.trimIndent()
+            java.nio.file.Path.of("version.env").writeText(versions)
+        }
+    }
 }
