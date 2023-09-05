@@ -23,7 +23,10 @@ jobs:
       - name: "Setup Gradle"
         uses: gradle/gradle-build-action@v2
       - name: "Build xcworkspace"
-        run: ./gradlew versionEnv && source version.env
+        run: |
+          ./gradlew versionEnv 
+          # export the variable in the file as pipeline env
+          cat version.env >> "$GITHUB_ENV"
       - name: "Setup app version"
         uses: yanamura/ios-bump-version@v1
         with:
