@@ -27,7 +27,7 @@ tasks {
     register("versionEnv") {
         doLast {
             val versions = """
-                APP_VERSION_NAME=${currentVersion}
+                APP_VERSION_NAME=${currentVersion.substringBefore('-')}
                 APP_VERSION_CODE=$versionNumber
             """.trimIndent()
             java.nio.file.Path.of("version.env").writeText(versions)
