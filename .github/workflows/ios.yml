@@ -1,3 +1,16 @@
+name: Ios app build
+on:
+  push:
+    branches:
+      - main
+      - "*"
+  pull_request:
+    types:
+      - opened
+      - reopened
+    branches:
+      - main
+
 jobs:
   deploy_ios:
     runs-on: macos-latest
