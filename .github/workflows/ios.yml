@@ -43,5 +43,4 @@ jobs:
           team-id: ${{ secrets.ZUHLKE_IOS_TEAM_ID }}
           certificate-password: ${{ secrets.APPLE_DEV_CERT_PASSWORD }}
           export-options: iosApp/exportOptionsRelease.plist
-          workspace-path: iosApp/iosApp.xcworkspace
           export-method: "app-store"
