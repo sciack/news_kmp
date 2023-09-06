@@ -48,5 +48,5 @@ jobs:
           code-signing-identity: "iPhone Distribution: Zuehlke Engineering AG (33AUWD68J4)"
           team-id: ${{ secrets.ZUHLKE_IOS_TEAM_ID }}
           certificate-password: ${{ secrets.APPLE_DEV_CERT_PASSWORD }}
-          export-options: iosApp/exportOptionsRelease.plist
+          #export-options: iosApp/exportOptionsRelease.plist
           export-method: "app-store"
