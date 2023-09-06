@@ -43,10 +43,9 @@ jobs:
         uses: yukiarrr/ios-build-action@v1.9.1
         with:
           project-path: iosApp/iosApp.xcodeproj
-          p12-key-base64: ${{ secrets.APPLE_DEV_P12_CERT_B64 }}
-          p12-cer-base64: ${{ secrets.APPLE_DEV_CER }}
+          p12-base64: ${{ secrets.APPLE_DEV_P12_CERT_B64 }}
           mobileprovision-base64: ${{ secrets.KNEWS_APP_PROFILE }}
-          code-signing-identity: "Apple Development: Mirko Sciachero (9RB852RC5D)"
+          code-signing-identity: "iOS Distribution"
           team-id: ${{ secrets.ZUHLKE_IOS_TEAM_ID }}
           certificate-password: ${{ secrets.APPLE_DEV_CERT_PASSWORD }}
           export-options: iosApp/exportOptionsRelease.plist
