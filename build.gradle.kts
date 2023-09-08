@@ -9,6 +9,8 @@ plugins {
     id("org.jetbrains.compose").apply(false)
     id("com.github.jmongard.git-semver-plugin")
     id("com.google.gms.google-services") version "4.3.15" apply false
+    id("com.google.firebase.appdistribution") version "4.0.0" apply false
+
 }
 
 val versionNumber =

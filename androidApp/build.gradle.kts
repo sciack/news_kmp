@@ -3,6 +3,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.compose")
     id("com.google.gms.google-services")
+    id("com.google.firebase.appdistribution")
+
 }
 
 kotlin {
@@ -45,4 +47,15 @@ android {
     kotlin {
         jvmToolchain(11)
     }
+
+    buildTypes {
+        getByName("release") {
+            firebaseAppDistribution {
+                artifactType = "APK"
+                releaseNotesFile = "./releaseNotes.txt"
+                testers = "m.sciachero@gmail.com"
+            }
+        }
+    }
+
 }

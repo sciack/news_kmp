@@ -1,0 +1,1 @@
+News application, just show the news and try to be a little smart

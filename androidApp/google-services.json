@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "",
-    "project_id": "",
-    "storage_bucket": "news-kmp-e2f5f.appspot.com"
+    "project_number": "458741720249",
+    "project_id": "news-kmp",
+    "storage_bucket": "news-kmp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1057098288898:android:499286b0c50186b3087c1b",
+        "mobilesdk_app_id": "1:458741720249:android:ebc0fec27fe688c3c8e768",
         "android_client_info": {
           "package_name": "com.github.sciack.news"
         }
       },
       "oauth_client": [
         {
-          "client_id": "",
+          "client_id": "458741720249-42j8csnem454eeuf86kndu3626bjfht4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": ""
+          "current_key": "AIzaSyCiSQ8bb5U56cBGNDIaG-LO8BGqGVWNzFw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "",
+              "client_id": "458741720249-42j8csnem454eeuf86kndu3626bjfht4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -6,6 +6,7 @@ name: Deploy to Firebase Hosting on merge
   push:
     branches:
       - main
+      - "*"
 
 permissions:
   contents: read
@@ -14,14 +15,25 @@ permissions:
   pull-requests: write
 
 jobs:
-  build_and_deploy:
+  deploy_android:
+    env:
+      MIXDRINKS_MOBILE_APP_VERSION_NAME: ${{ needs.prepare_deploy.outputs.output_write_mix_drinks_mobile_version_name }}
+      MIXDRINKS_MOBILE_APP_VERSION_CODE: ${{ needs.prepare_deploy.outputs.output_write_mix_drinks_mobile_version_code }}
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_NEWS_KMP_E2F5F }}'
-          channelId: live
-          projectId: news-kmp-e2f5f
+      - name: "Setup Gradle"
+        uses: gradle/gradle-build-action@v2
+      - name: "Build retrieve the version"
+        run: |
+          ./gradlew versionEnv 
+          # export the variable in the file as pipeline env
+          cat version.env >> "$GITHUB_ENV"
+      - name: "Build bundle release"
+        run: ./gradlew android:bundleRelease
+      - name: "Credentials"
+        run: |
+          echo ${{ secrets.KNEWS_ACCOUNT_JSON_KEY}} > google_account_key.json
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$PWD/google_account_key.json" >> "$GITHUB_ENV"
+      - name: "Push release"
+        run: ./gradlew assembleRelease appDistributionUploadRelease
