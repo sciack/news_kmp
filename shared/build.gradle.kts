@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     kotlin("plugin.serialization") version "1.9.0"
     id("com.android.library")
     id("org.jetbrains.compose")
@@ -16,23 +15,16 @@ kotlin {
 
     jvm("desktop")
 
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    cocoapods {
-        version = currentVersion.toString().substringBefore('-')
-        summary = "KNews shared version"
-        homepage = "https://github.com/sciack/news_kmp"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
             baseName = "shared"
             isStatic = true
         }
     }
-
-
 
     sourceSets {
         val ktorVersion = "2.3.3"
@@ -88,7 +80,7 @@ kotlin {
                 //implementation("io.mockk:mockk:1.13.4")
                 // Compose
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.uiTestJUnit4)
+                implementation(compose.desktop.uiTestJUnit4)
             }
         }
 
@@ -117,7 +109,7 @@ kotlin {
                 dependsOn(desktopMain)
 
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.uiTestJUnit4)
+                implementation(compose.desktop.uiTestJUnit4)
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutineVersion")
             }
         }
