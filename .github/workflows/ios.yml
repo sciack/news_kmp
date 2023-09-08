@@ -50,3 +50,20 @@ jobs:
           certificate-password: ${{ secrets.APPLE_DEV_CERT_PASSWORD }}
           #export-options: iosApp/exportOptionsRelease.plist
           export-method: "app-store"
+      - name: "Upload IPA file as artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          name: "KNews App IPA"
+          path: "output.ipa"
+      - name: Install private API key P8
+        env:
+          PRIVATE_API_KEY_BASE64: ${{ secrets.KNEWS_IOS_APPSTORE_API_PRIVATE_KEY }}
+          API_KEY: ${{ secrets.KNEWS_IOS_APPSTORE_API_KEY_ID }}
+        run: |
+          mkdir -p ~/private_keys
+          echo -n "$PRIVATE_API_KEY_BASE64" | base64 --decode --output ~/private_keys/AuthKey_$API_KEY.p8
+      - name: "Upload IPA file to TestFlight"
+        env:
+          API_KEY: ${{ secrets.KNEWS_IOS_APPSTORE_API_KEY_ID }}
+          API_ISSUER: ${{ secrets.KNEWS_IOS_APPSTORE_ISSUER_ID  }}
+        run: xcrun altool --output-format xml --upload-app -f output.ipa -t ios --apiKey $API_KEY --apiIssuer $API_ISSUER
