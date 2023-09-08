@@ -35,11 +35,9 @@ jobs:
           ./gradlew versionEnv 
           # export the variable in the file as pipeline env
           cat version.env >> "$GITHUB_ENV"
-      - name: "Build bundle release"
-        run: ./gradlew android:bundleRelease
       - name: "Credentials"
         run: |
-          echo "${{ secrets.KNEWS_ACCOUNT_JSON_KEY}}\n" |base64 -d > google_account_key.json
+          echo "${{ secrets.KNEWS_ACCOUNT_JSON_KEY}}" |base64 -d > google_account_key.json
           cat google_account_key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$PWD/google_account_key.json" >> "$GITHUB_ENV"
       - name: "Push release"
