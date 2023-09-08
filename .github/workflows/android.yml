@@ -39,7 +39,8 @@ jobs:
         run: ./gradlew android:bundleRelease
       - name: "Credentials"
         run: |
-          cat <<< "${{ secrets.KNEWS_ACCOUNT_JSON_KEY}}\n" > google_account_key.json
+          echo "${{ secrets.KNEWS_ACCOUNT_JSON_KEY}}\n" |base64 -d > google_account_key.json
+          cat google_account_key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$PWD/google_account_key.json" >> "$GITHUB_ENV"
       - name: "Push release"
         run: ./gradlew assembleRelease appDistributionUploadRelease
