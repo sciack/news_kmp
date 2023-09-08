@@ -1,15 +1,12 @@
-name: Ios app build
+#
+# Release on tag
+#
+
+name: Ios app release
 on:
   push:
-    branches:
-      - main
-      - "*"
-  pull_request:
-    types:
-      - opened
-      - reopened
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
   deploy_ios:
