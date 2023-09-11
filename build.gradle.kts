@@ -13,7 +13,7 @@ plugins {
 
 }
 
-val versionNumber = System.getenv("BUILD_NUMBER")?:1
+val versionNumber = System.getenv("BUILD_NUMBER")?.toLong()?:1
 val currentVersion = semver.version
 
 allprojects {
