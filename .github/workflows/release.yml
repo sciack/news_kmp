@@ -28,7 +28,8 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - uses: actions/checkout@v3
-        fetch-depth: 0
+        with:
+          fetch-depth: 0
       - name: release
         uses: "marvinpinto/action-automatic-releases@latest"
         id: create_release
@@ -47,7 +48,8 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v3
-        fetch-depth: 0
+        with:
+          fetch-depth: 0
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
