@@ -1,9 +1,11 @@
 name: News KMP release pipeline
 on:
   workflow_dispatch:
-    branch:
-      - main
-
+    input:
+      preRelease:
+        description: 'Pre release tag, "-" for a release, nothing for the default behaviour'
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -27,8 +29,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'zulu'
-      - name: create tag
-        run: ./gradlew releaseVersion --preRelease=-
+      - name: create tag for pre-release ${{inputs.preRelease}}
+        if: inputs.preRelease != ''
+        run: ./gradlew releaseVersion --preRelease=${{inputs.preRelease}}
+      - name: create tag for next release
+        if: inputs.preRelease == ''
+        run: ./gradlew releaseVersion
       - name: push tag
         run: |
           git push
