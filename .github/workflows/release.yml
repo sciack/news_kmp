@@ -28,6 +28,7 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - uses: actions/checkout@v3
+        fetch-depth: 0
       - name: release
         uses: "marvinpinto/action-automatic-releases@latest"
         id: create_release
@@ -46,6 +47,7 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v3
+        fetch-depth: 0
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -60,6 +62,7 @@ jobs:
           ./gradlew versionEnv 
           # export the variable in the file as pipeline env
           cat version.env >> "$GITHUB_ENV"
+          git clean -fd
       - name: Install rpm
         uses: ConorMacBride/install-package@v1
         with:
@@ -94,7 +97,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 100
+          fetch-depth: 0
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
@@ -141,7 +144,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 100
+          fetch-depth: 0
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
@@ -178,7 +181,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 100
+          fetch-depth: 0
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
@@ -194,6 +197,7 @@ jobs:
           ./gradlew versionEnv 
           # export the variable in the file as pipeline env
           cat version.env >> "$GITHUB_ENV"
+          git clean -fd
       - name: "Credentials"
         run: |
           echo "${{ secrets.KNEWS_ACCOUNT_JSON_KEY}}" |base64 -d > google_account_key.json
@@ -208,7 +212,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 100
+          fetch-depth: 0
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
@@ -224,6 +228,7 @@ jobs:
           ./gradlew versionEnv 
           # export the variable in the file as pipeline env
           cat version.env >> "$GITHUB_ENV"
+          git clean -fd
       - name: "Setup app version"
         uses: yanamura/ios-bump-version@v1
         with:
