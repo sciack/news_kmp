@@ -1,4 +1,4 @@
-package com.myapplication
+package com.github.sciack.news
 
 import MainView
 import android.os.Bundle

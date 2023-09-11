@@ -15,8 +15,6 @@ kotlin {
                 implementation(project(":shared"))
                 implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
                 implementation("com.google.firebase:firebase-analytics-ktx")
-                implementation("com.google.firebase:firebase-auth")
-                implementation("com.google.firebase:firebase-firestore")
             }
         }
     }
@@ -29,7 +27,7 @@ logger.warn("Version $version")
 
 android {
     compileSdk = (findProperty("android.compileSdk") as String).toInt()
-    namespace = "com.myapplication"
+    namespace = "com.github.sciack.news"
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
 
