@@ -57,13 +57,9 @@ jobs:
     - name: make gradlew executable
       run: chmod +x ./gradlew
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@v2.6.0 # v2.6.0
-      with:
-        arguments: check koverXmlReport
+      run: ./gradlew  check koverXmlReport
     - name: Try to build the desktop verson
-      uses: gradle/gradle-build-action@v2.6.0 # v2.6.0
-      with:
-        arguments: packageDistributionForCurrentOS
+      run: ./gradlew  packageDistributionForCurrentOS
 
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v2
