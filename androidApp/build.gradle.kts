@@ -47,6 +47,13 @@ android {
     }
 
     buildTypes {
+        getByName("debug") {
+            firebaseAppDistribution {
+                artifactType = "APK"
+                releaseNotesFile = "./releaseNotes.txt"
+                testers = "m.sciachero@gmail.com"
+            }
+        }
         getByName("release") {
             firebaseAppDistribution {
                 artifactType = "APK"

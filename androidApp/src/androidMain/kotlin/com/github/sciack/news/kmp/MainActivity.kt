@@ -1,4 +1,4 @@
-package com.github.sciack.news
+package com.github.sciack.news.kmp
 
 import MainView
 import android.os.Bundle
