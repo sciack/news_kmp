@@ -13,10 +13,7 @@ plugins {
 
 }
 
-val versionNumber =
-    with(semver.semVersion) {
-        major * 10_000 + minor * 100 + patch
-    }
+val versionNumber = System.getenv("BUILD_NUMBER")?:1
 val currentVersion = semver.version
 
 allprojects {
