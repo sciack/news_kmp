@@ -1,7 +1,7 @@
-name: News KMP release pipeline
+name: Tag for release
 on:
   workflow_dispatch:
-    input:
+    inputs:
       preRelease:
         description: 'Pre release tag, "-" for a release, nothing for the default behaviour'
         required: false
