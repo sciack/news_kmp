@@ -15,11 +15,13 @@ plugins {
 
 val versionNumber = System.getenv("BUILD_NUMBER")?.toLong()?:1
 val currentVersion = semver.version
+val rpmVersion = semver.version.replace('-','~')
 
 allprojects {
     extra["versionNumber"] = versionNumber
     version  = currentVersion
-
+    extra["semVer"] = currentVersion
+    extra["rpmVersion"] = rpmVersion
 }
 
 tasks {
@@ -28,7 +30,10 @@ tasks {
             val versions = """
                 APP_VERSION_NAME=${currentVersion.substringBefore('-')}
                 APP_VERSION_CODE=$versionNumber
+                RPM_VERSION=$rpmVersion
+                VERSION=$currentVersion
             """.trimIndent()
+            logger.warn("Version: $versions")
             java.nio.file.Path.of("version.env").writeText(versions)
         }
     }

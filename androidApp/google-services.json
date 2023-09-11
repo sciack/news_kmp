@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:458741720249:android:ebc0fec27fe688c3c8e768",
+        "mobilesdk_app_id": "1:458741720249:android:8e3ac7173d64c896c8e768",
         "android_client_info": {
-          "package_name": "com.github.sciack.news"
+          "package_name": "com.github.sciack.news.kmp"
         }
       },
       "oauth_client": [
