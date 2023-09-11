@@ -112,9 +112,7 @@ jobs:
       - name: make gradlew executable
         run: chmod +x ./gradlew
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2.6.0 # v2.6.0
-        with:
-          arguments: packageDistributionForCurrentOs
+        run: ./gradlew packageDistributionForCurrentOs
 
       - name: upload mac artifact
         uses: actions/upload-release-asset@v1
@@ -151,11 +149,8 @@ jobs:
           distribution: 'temurin'
       - name: show java version
         run: java --version
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2.6.0
       - name: package
         run: ./gradlew packageDistributionForCurrentOs -i
-
       - name: upload windows artifact
         uses: actions/upload-release-asset@v1
         with:
@@ -189,8 +184,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: "Setup Gradle"
-        uses: gradle/gradle-build-action@v2
       - name: "Build retrieve the version"
         run: |
           ./gradlew versionEnv 
