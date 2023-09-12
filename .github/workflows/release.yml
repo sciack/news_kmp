@@ -173,6 +173,8 @@ jobs:
 
   android:
     runs-on: ubuntu-latest
+    env:
+      SCIACK_KEY_PASSWORD: ${{ secrets.SCIACK_KEYSTORE_PWD }}
     needs:
       - release
     permissions:
@@ -204,6 +206,9 @@ jobs:
         run: |
           echo "${{ secrets.KNEWS_ACCOUNT_JSON_KEY}}" |base64 -d > google_account_key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$PWD/google_account_key.json" >> "$GITHUB_ENV"
+      - name: "Key Store"
+        run: |
+          echo -n "${{ secrets.SCIACK_KEYSTORE}}" |base64 -d > my-release-key.jks
       - name: "Push release"
         run: ./gradlew assembleRelease appDistributionUploadRelease
 
