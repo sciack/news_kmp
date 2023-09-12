@@ -13,7 +13,7 @@ plugins {
 
 }
 
-val versionNumber = System.getenv("BUILD_NUMBER")?.toLong()?:1
+val versionNumber = System.getenv("BUILD_NUMBER")?.toInt()?:1
 val currentVersion = semver.version
 val rpmVersion = semver.version.replace('-','~')
 
