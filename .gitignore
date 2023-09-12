@@ -14,3 +14,6 @@ iosApp/iosApp.xcodeproj/*
 !iosApp/iosApp.xcodeproj/project.pbxproj
 shared/shared.podspec
 version.env
+/my-release-key.jks
+/my-release-key.jks.base64
+google_account_key.json

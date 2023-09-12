@@ -20,7 +20,7 @@ kotlin {
     }
 }
 
-val versionNumber: Int by extra
+val versionNumber: Int? by extra
 
 logger.warn("Version number $versionNumber")
 logger.warn("Version $version")
@@ -35,7 +35,7 @@ android {
         applicationId = "com.github.sciack.news.kmp"
         minSdk = (findProperty("android.minSdk") as String).toInt()
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
-        versionCode = versionNumber
+        versionCode = versionNumber ?: 1
         versionName = "$version"
     }
     compileOptions {
@@ -45,21 +45,24 @@ android {
     kotlin {
         jvmToolchain(11)
     }
-
-    buildTypes {
-        getByName("debug") {
-            firebaseAppDistribution {
-                artifactType = "APK"
-                releaseNotesFile = "./releaseNotes.txt"
-                testers = "m.sciachero@gmail.com"
+    signingConfigs {
+        create("release") {
+            storeFile = file("../my-release-key.jks").apply {
+                logger.warn("keystore: ${this.absolutePath} exists? ${this.exists()}")
             }
+            storePassword = System.getenv("SCIACK_KEY_PASSWORD")
+            keyAlias = "sciack-key"
+            keyPassword = System.getenv("SCIACK_KEY_PASSWORD")
         }
+    }
+    buildTypes {
         getByName("release") {
-            firebaseAppDistribution {
-                artifactType = "APK"
-                releaseNotesFile = "./releaseNotes.txt"
-                testers = "m.sciachero@gmail.com"
-            }
+            signingConfig = signingConfigs.getByName("release")
+                firebaseAppDistribution {
+                    artifactType = "APK"
+                    releaseNotesFile = "./releaseNotes.txt"
+                    testers = "m.sciachero@gmail.com"
+                }
         }
     }
 
