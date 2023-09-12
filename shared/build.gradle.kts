@@ -9,7 +9,6 @@ plugins {
 
 val currentVersion = version
 kotlin {
-    val composeVersion = extra["compose.version"] as String
 
     androidTarget()
 
@@ -76,7 +75,6 @@ kotlin {
         val androidUnitTest by getting {
             dependencies {
                 dependsOn(androidMain)
-
                 //implementation("io.mockk:mockk:1.13.4")
                 // Compose
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
