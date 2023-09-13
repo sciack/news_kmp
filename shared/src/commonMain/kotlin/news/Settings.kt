@@ -43,9 +43,6 @@ class SettingsModel : ScreenModel {
     val apiKey = mutableStateOf(CurrentSettings.apiKey)
 }
 
-val SMALL = 8.dp
-val LARGE = 16.dp
-
 class SettingsScreen : Screen {
 
 
