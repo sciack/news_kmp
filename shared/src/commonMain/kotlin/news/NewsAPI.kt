@@ -23,7 +23,7 @@ class NewsAPI(private val apiKey: String, val client: HttpClient = defaultClient
         logger.error(it) {"Error retrieving topNews"}
     }
 
-    suspend fun fetchArticleImage(article: Article, httpClient: HttpClient = defaultClient)= runCatching {
+    suspend fun fetchArticleImage(article: Article)= runCatching {
         require(!article.urlToImage.isNullOrEmpty()) {
             "Image url is null"
         }
