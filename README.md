@@ -1,20 +1,16 @@
-[![official project](http://jb.gg/badges/official.svg)](https://confluence.jetbrains.com/display/ALL/JetBrains+on+GitHub)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-# [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform) application
+# [KNews](https://github.com/sciack/news_kmp) application
 
 > **Note**
 > The iOS part of Compose Multiplatform is in Alpha. It may change incompatibly and require manual migration in the
 > future.
 > If you have any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
 
-You can use this template to start developing your
-own [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform#readme) application targeting desktop,
+# KNews App
+This app is started from the template [Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform#readme) application targeting desktop,
 Android, and iOS.
-Follow our tutorial below to get your first Compose Multiplatform app up and running.
-The result will be a [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) project that uses the
+The result is a [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) project that uses the
 Compose Multiplatform UI framework.
-
-<img src="readme_images/banner.png" height="350">
 
 ## Set up the environment
 
@@ -22,15 +18,28 @@ Compose Multiplatform UI framework.
 > You need a Mac with macOS to write and run iOS-specific code on simulated or real devices.
 > This is an Apple requirement.
 
-To work with this template, you need the following:
+To work with this application, you need the following:
+
+### Mac (suggested)
 
 * A machine running a recent version of macOS
+* Java 17 & Java 11 - see [sdkman](https://sdkman.io)
 * [Xcode](https://apps.apple.com/us/app/xcode/id497799835)
 * [Android Studio](https://developer.android.com/studio)
 * The [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile)
 * The [CocoaPods dependency manager](https://kotlinlang.org/docs/native-cocoapods.html)
 
-### Check your environment
+### Windows & Linux
+
+* A recent version of the OS
+* Java 17 & Java 11 - for linux see [sdkman](https://sdkman.io) with windows you can just download them using IJ or Android Studio
+* Android Studio
+* The [Kotlin Multiplatform Mobile plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform-mobile)
+
+> **Warning**
+> iOS compilation will not work on Windows and Linux, but Android and desktop can be used
+
+### Check your environment (MacOS only)
 
 Before you start, use the [KDoctor](https://github.com/Kotlin/kdoctor) tool to ensure that your development environment
 is configured correctly:
@@ -114,8 +123,6 @@ so JAVA home will be accessible and available when xcode trigger gradle build.
 To run your desktop application in Android Studio, select `desktopApp` in the list of run configurations and click **Run**:
 
 <img src="readme_images/run_on_desktop.png" height="60px"><br />
-
-<img src="readme_images/desktop_app_running.png" height="300px">
 
 You can also run Gradle tasks in the terminal:
 
@@ -223,71 +230,34 @@ To run the application, set the `TEAM_ID`:
 
 ## Make your first changes
 
-You can now make some changes in the code and check that they are visible in both the iOS and Android applications at
-the same time:
+See the issue in https://github.com/sciack/news_kmp/issues and choose one.
+Most of the code should work in a multiplatform fashion so the changes will be in `shared/src/commonMain` source tree.
+Test should be in `shared/src/commonTest`
 
-1. In Android Studio, navigate to the `shared/src/commonMain/kotlin/App.kt` file.
-   This is the common entry point for your Compose Multiplatform app.
+### Hints
 
-   Here, you see the code responsible for rendering the "Hello, World!" button and the animated Compose Multiplatform logo:
-   
-   ```kotlin
-   @OptIn(ExperimentalResourceApi::class)
-   @Composable
-   internal fun App() {
-       MaterialTheme {
-           var greetingText by remember { mutableStateOf("Hello, World!") }
-           var showImage by remember { mutableStateOf(false) }
-           Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-               Button(onClick = {
-                   greetingText = "Hello, ${getPlatformName()}"
-                   showImage = !showImage
-               }) {
-                   Text(greetingText)
-               }
-               AnimatedVisibility(showImage) {
-                   Image(
-                       painterResource("compose-multiplatform.xml"),
-                       null
-                   )
-               }
-           }
-       }
-   }
-   ```
+Most of the code is similar (if not the same as) Jetpack Compose for Android, so most of the things and helps are reusable, 
+notable things missing:
+* Navigation, we used instead [Voyager](https://voyager.adriel.cafe/navigation)
+* Logging must be cross platform, so the classic KotlinLogger with SLF4J binding is not enough this works fine:
+  [KmLogging](https://github.com/LighthouseGames/KmLogging)
+* Some component are not implemented
 
-2. Update the shared code by adding a text field that will update the name displayed on the button:
+### Consideration
+The current design system is based on Material, there is the possibility of theming, but most of the component are linked
+to the design system, therefore except few things like color, icon and typography is not really easy have a complete 
+different look and feel.  
+Having it will require the rewriting of all the basic components and widgets.
 
-   ```diff
-   @OptIn(ExperimentalResourceApi::class)
-   @Composable
-   internal fun App() {
-       MaterialTheme {
-           var greetingText by remember { mutableStateOf("Hello, World!") }
-           var showImage by remember { mutableStateOf(false) }
-           Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-               Button(onClick = {
-                   greetingText = "Hello, ${getPlatformName()}"
-                   showImage = !showImage
-               }) {
-                   Text(greetingText)
-               }
-   +           TextField(greetingText, onValueChange = { greetingText = it })
-               AnimatedVisibility(showImage) {
-                   Image(
-                       painterResource("compose-multiplatform.xml"),
-                       null
-                   )
-               }
-           }
-       }
-   }
-   ```
+### Linking native implementation
+I didn't went so deep in it, but KMP allow different implementation of the same code, this can be achieved in 2 different way:
 
-3. Re-run the `desktopApp`, `androidApp`, and `iosApp` configurations. You'll see this change reflected in all three
-   apps:
+1. the classic API/SPI/Provider pattern where the whole logic is implemented in the SPI layer leaving the native difference
+in the provider logic
+2. using the `expect` and `actual` keyword in __Kotlin Multi Platform__ (see:
+   [Connect to platform-specific APIs](https://kotlinlang.org/docs/multiplatform-connect-to-apis.html)).
+This is a lightweight implementation of the above pattern but allow check on compile time (even if there are some challenges).
 
-   <img src="readme_images/text_field_added.png" height="350px">
 
 ## How to configure the iOS application
 
@@ -312,11 +282,3 @@ If you need to change this option after you open the project in Android Studio, 
 To configure advanced settings, use Xcode. After opening the project in Android Studio,
 open the `iosApp/iosApp.xcworkspace` file in Xcode and make changes there.
 
-## Next steps
-
-We encourage you to explore Compose Multiplatform further and try out more projects:
-
-* [Create an application targeting iOS and Android with Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform-ios-android-template#readme)
-* [Create an application targeting Windows, macOS, and Linux with Compose Multiplatform for Desktop](https://github.com/JetBrains/compose-multiplatform-desktop-template#readme)
-* [Complete more Compose Multiplatform tutorials](https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md)
-* [Explore some more advanced Compose Multiplatform example projects](https://github.com/JetBrains/compose-multiplatform/blob/master/examples/README.md)
