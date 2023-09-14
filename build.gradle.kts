@@ -1,3 +1,4 @@
+import kotlin.io.path.absolutePathString
 import kotlin.io.path.writeText
 
 plugins {
@@ -34,7 +35,9 @@ tasks {
                 VERSION=$currentVersion
             """.trimIndent()
             logger.warn("Version: $versions")
-            java.nio.file.Path.of("version.env").writeText(versions)
+            val path = project.projectDir.toPath().resolve("version.env")
+            logger.warn("Writing version in file ${path.absolutePathString()}")
+            path.writeText(versions)
         }
     }
 }

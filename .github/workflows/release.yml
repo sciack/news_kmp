@@ -78,7 +78,7 @@ jobs:
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
           asset_path: desktopApp/build/compose/binaries/main/rpm/News-${{ env.RPM_VERSION }}-1.x86_64.rpm
-          asset_name: News-${{ env.RPM_VERSION  }}-1.x86_64.rpm
+          asset_name: news-${{ env.RPM_VERSION  }}-1.x86_64.rpm
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -121,6 +121,12 @@ jobs:
         run: java --version
       - name: make gradlew executable
         run: chmod +x ./gradlew
+      - name: "Build retrieve the version"
+        run: |
+          ./gradlew versionEnv 
+          # export the variable in the file as pipeline env
+          cat version.env >> "$GITHUB_ENV"
+          git clean -fd
       - name: Build with Gradle
         run: ./gradlew packageDistributionForCurrentOs
 
@@ -128,8 +134,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: desktopApp/build/compose/binaries/main/dmg/News-${{ env.APP_VERSION_NAME }}.dmg
-          asset_name: News-${{ github.ref_name }}.dmg
+          asset_path: desktopApp/build/compose/binaries/main/dmg/news-${{ env.APP_VERSION_NAME }}.dmg
+          asset_name: news-${{ env.APP_VERSION_NAME }}.dmg
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -159,14 +165,20 @@ jobs:
           distribution: 'temurin'
       - name: show java version
         run: java --version
+      - name: "Build retrieve the version"
+        run: |
+          ./gradlew versionEnv 
+          # export the variable in the file as pipeline env
+          cat version.env >> "$GITHUB_ENV"
+          git clean -fd
       - name: package
         run: ./gradlew packageDistributionForCurrentOs -i
       - name: upload windows artifact
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: desktopApp/build/compose/binaries/main/msi/News-${{ env.APP_VERSION_NAME }}.msi
-          asset_name: News-${{ github.ref_name }}.msi
+          asset_path: desktopApp/build/compose/binaries/main/msi/news-${{ env.APP_VERSION_NAME }}.msi
+          asset_name: news-${{ env.APP_VERSION_NAME }}.msi
           asset_content_type: application/octet-stream
         env:
           GITHUB_TOKEN: ${{ github.token }}
