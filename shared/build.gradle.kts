@@ -51,7 +51,6 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                dependsOn(commonMain)
                 implementation(kotlin("test"))
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-junit"))
@@ -72,15 +71,7 @@ kotlin {
             }
         }
 
-        val androidUnitTest by getting {
-            dependencies {
-                dependsOn(androidMain)
-                //implementation("io.mockk:mockk:1.13.4")
-                // Compose
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.desktop.uiTestJUnit4)
-            }
-        }
+
 
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -102,15 +93,6 @@ kotlin {
             }
         }
 
-        val desktopTest by getting {
-            dependencies {
-                dependsOn(desktopMain)
-
-                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
-                implementation(compose.desktop.uiTestJUnit4)
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutineVersion")
-            }
-        }
     }
 }
 

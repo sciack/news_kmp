@@ -48,7 +48,7 @@ class SettingsScreen : Screen {
 
     @Composable
     override fun Content() {
-        val setColorScheme = ColorScheme.LocalSetColorScheme.current
+        val setColorScheme = LocalSetColorScheme.current
         val navigator = LocalNavigator.currentOrThrow
         val screenModel = rememberScreenModel { SettingsModel() }
 
@@ -165,7 +165,6 @@ enum class DarkModes {
         SYSTEM_DEFAULT -> isSystemInDarkTheme()
     }
 }
-object ColorScheme {
-    val LocalColorScheme = staticCompositionLocalOf { DarkModes.SYSTEM_DEFAULT }
-    val LocalSetColorScheme = staticCompositionLocalOf<(DarkModes) -> Unit> { {} }
-}
+
+val LocalColorScheme = staticCompositionLocalOf { DarkModes.SYSTEM_DEFAULT }
+val LocalSetColorScheme = staticCompositionLocalOf<(DarkModes) -> Unit> { {} }
