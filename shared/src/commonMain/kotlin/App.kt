@@ -76,11 +76,8 @@ fun App() {
     }
 }
 
-@Suppress("NO_ACTUAL_FOR_EXPECT")
 expect fun getPlatformName(): String
 
-
-@OptIn(ExperimentalResourceApi::class)
 class HomeScreen : Screen {
 
     @Composable
