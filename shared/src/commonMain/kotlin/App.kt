@@ -16,8 +16,9 @@ import androidx.compose.runtime.remember
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
-import news.ColorScheme
 import news.CurrentSettings
+import news.LocalColorScheme
+import news.LocalSetColorScheme
 import news.NewsList
 import news.SettingsScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -29,10 +30,10 @@ fun App() {
         mutableStateOf(CurrentSettings.darkMode)
     }
     CompositionLocalProvider(
-        ColorScheme.LocalColorScheme provides colorScheme,
-        ColorScheme.LocalSetColorScheme provides setColorScheme
+        LocalColorScheme provides colorScheme,
+        LocalSetColorScheme provides setColorScheme
     ) {
-        val darkMode = ColorScheme.LocalColorScheme.current
+        val darkMode = LocalColorScheme.current
         val colorSchema = if (darkMode.isDarkMode()) {
             darkColors()
         } else {
@@ -79,9 +80,8 @@ fun App() {
 expect fun getPlatformName(): String
 
 
-
 @OptIn(ExperimentalResourceApi::class)
-class HomeScreen: Screen {
+class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
