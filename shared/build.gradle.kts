@@ -28,8 +28,9 @@ kotlin {
     sourceSets {
         val ktorVersion = "2.3.3"
         val loggingVersion = "1.3.0"
-        val voyagerVersion = "1.0.0-rc06"
+        val voyagerVersion = "1.0.0-rc07"
         val coroutineVersion = "1.7.3"
+        val kodeinVersion = "7.20.2"
         val commonMain by getting {
             dependencies {
                 implementation(compose.runtime)
@@ -37,7 +38,7 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
@@ -46,6 +47,9 @@ kotlin {
                 implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
                 implementation("com.russhwolf:multiplatform-settings:1.0.0")
                 implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
+                implementation ("org.kodein.di:kodein-di:$kodeinVersion")
+                implementation("org.kodein.di:kodein-di-framework-compose:$kodeinVersion")
+                implementation("cafe.adriel.voyager:voyager-kodein:$voyagerVersion")
             }
         }
 
@@ -62,9 +66,9 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                api("androidx.activity:activity-compose:1.6.1")
+                api("androidx.activity:activity-compose:1.7.2")
                 api("androidx.appcompat:appcompat:1.6.1")
-                api("androidx.core:core-ktx:1.9.0")
+                api("androidx.core:core-ktx:1.12.0")
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
                 implementation("cafe.adriel.voyager:voyager-androidx:$voyagerVersion")
