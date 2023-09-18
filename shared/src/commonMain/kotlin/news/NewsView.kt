@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,57 +35,56 @@ import org.lighthousegames.logging.logging
 fun NewsList(newsSM: NewsSM) {
 
     val state by newsSM.state.collectAsState()
-    if (state is NewsSM.State.Loading) {
-        Column(modifier = Modifier.fillMaxSize()){
-            CircularProgressIndicator(Modifier.size(48.dp).align(Alignment.CenterHorizontally))
+    when (state) {
+        is NewsSM.State.Loading -> {
+            Column(modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(Modifier.size(48.dp).align(Alignment.CenterHorizontally))
+            }
+            LaunchedEffect("Load articles") {
+                newsSM.loadArticles()
+            }
         }
-        LaunchedEffect("Load articles") {
-            newsSM.loadArticles()
-        }
-    } else if(state is NewsSM.State.Loaded ){
-        val topNews = (state as NewsSM.State.Loaded).articles
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            state = rememberLazyListState()
-        ) {
-            items(topNews, key = { article -> article.title.hashCode() }) { article ->
-                Row {
-                    if (!article.urlToImage.isNullOrEmpty()) {
 
-                        val resource by rememberFactory<Article, ImageLoader>()
-                        val imageBitmap = resource(article).rememberImageBitmap().orEmpty()
-                        logging().info { "Loading image for article: ${article.title}" }
-                        Image(
-                            imageBitmap,
-                            article.title,
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.height(120.dp).align(Alignment.CenterVertically)
-                        )
+        is NewsSM.State.Loaded -> {
+            val topNews = (state as NewsSM.State.Loaded).articles
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                state = rememberLazyListState()
+            ) {
+                items(topNews, key = { article -> article.title.hashCode() }) { article ->
+                    Row {
+                        if (!article.urlToImage.isNullOrEmpty()) {
+
+                            val resource by rememberFactory<Article, ImageLoader>()
+                            val imageLoader = remember {
+                                resource(article)
+                            }
+                            val imageBitmap = imageLoader.rememberImageBitmap().orEmpty()
+
+                            Image(
+                                imageBitmap,
+                                article.title,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.height(120.dp).align(Alignment.CenterVertically)
+                            )
+                        }
+                        Column {
+                            Text(
+                                article.title.orEmpty(),
+                                style = MaterialTheme.typography.h4
+                            )
+                            Text(
+                                article.content.orEmpty(),
+                                style = MaterialTheme.typography.subtitle1
+                            )
+                            Divider(color = Color.LightGray, thickness = 1.dp)
+                        }
                     }
-                    Column {
-                        Text(
-                            article.title.orEmpty(),
-                            style = MaterialTheme.typography.h4
-                        )
-                        Text(
-                            article.content.orEmpty(),
-                            style = MaterialTheme.typography.subtitle1
-                        )
-                        Divider(color = Color.LightGray, thickness = 1.dp)
-                    }
+
                 }
-
             }
         }
     }
+
 }
 
-
-@OptIn(ExperimentalResourceApi::class)
-class ImageLoader(private val currentSettings: CurrentSettings, private val article: Article) :
-    Resource {
-    override suspend fun readBytes(): ByteArray {
-        val newsApi = NewsAPI(currentSettings.apiKey)
-        return newsApi.fetchArticleImage(article).getOrThrow()
-    }
-}
