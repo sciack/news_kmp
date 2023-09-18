@@ -14,6 +14,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.kodein.rememberScreenModel
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
 import news.CurrentSettings
@@ -22,56 +23,66 @@ import news.LocalSetColorScheme
 import news.NewsList
 import news.SettingsScreen
 import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.kodein.di.compose.rememberInstance
+import org.kodein.di.compose.withDI
 
 
 @Composable
 fun App() {
-    val (colorScheme, setColorScheme) = remember {
-        mutableStateOf(CurrentSettings.darkMode)
-    }
-    CompositionLocalProvider(
-        LocalColorScheme provides colorScheme,
-        LocalSetColorScheme provides setColorScheme
-    ) {
-        val darkMode = LocalColorScheme.current
-        val colorSchema = if (darkMode.isDarkMode()) {
-            darkColors()
-        } else {
-            lightColors()
+    withDI(di) {
+        val currentSettings by rememberInstance<CurrentSettings>()
+        val (colorScheme, setColorScheme) = remember {
+            mutableStateOf(currentSettings.darkMode)
         }
-        MaterialTheme(colorSchema) {
-            Navigator(HomeScreen()) { navigator ->
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            title = {
-                                Text("News")
-                            },
-                            navigationIcon = {
-                                if (navigator.canPop) {
-                                    IconButton(onClick = {
-                                        navigator.pop()
-                                    }) {
-                                        Icon(Icons.Default.ArrowBack, "Back")
-                                    }
-                                }
-                            },
-                            actions = {
-
-                                IconButton(
-                                    onClick = {
-                                        navigator.push(SettingsScreen())
-                                    },
-                                ) {
-                                    Icon(Icons.Default.Settings, "Settings")
-                                }
-                            }
-                        )
-                    }
-                ) {
-                    CurrentScreen()
-                }
+        CompositionLocalProvider(
+            LocalColorScheme provides colorScheme,
+            LocalSetColorScheme provides setColorScheme
+        ) {
+            val darkMode = LocalColorScheme.current
+            val colorSchema = if (darkMode.isDarkMode()) {
+                darkColors()
+            } else {
+                lightColors()
             }
+            MaterialTheme(colorSchema) {
+                mainBody()
+            }
+        }
+    }
+}
+
+@Composable
+private fun mainBody() {
+    Navigator(HomeScreen()) { navigator ->
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text("News")
+                    },
+                    navigationIcon = {
+                        if (navigator.canPop) {
+                            IconButton(onClick = {
+                                navigator.pop()
+                            }) {
+                                Icon(Icons.Default.ArrowBack, "Back")
+                            }
+                        }
+                    },
+                    actions = {
+
+                        IconButton(
+                            onClick = {
+                                navigator.push(SettingsScreen())
+                            },
+                        ) {
+                            Icon(Icons.Default.Settings, "Settings")
+                        }
+                    }
+                )
+            }
+        ) {
+            CurrentScreen()
         }
     }
 }
@@ -82,6 +93,6 @@ class HomeScreen : Screen {
 
     @Composable
     override fun Content() {
-        NewsList()
+        NewsList(rememberScreenModel())
     }
 }

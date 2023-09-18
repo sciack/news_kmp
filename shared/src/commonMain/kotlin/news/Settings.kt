@@ -31,16 +31,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.ScreenModel
-import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.kodein.rememberScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.set
 
-class SettingsModel : ScreenModel {
+class SettingsModel(val currentSettings: CurrentSettings) : ScreenModel {
 
-    val apiKey = mutableStateOf(CurrentSettings.apiKey)
+    val apiKey = mutableStateOf(currentSettings.apiKey)
+    val darkMode = mutableStateOf(currentSettings.darkMode)
+
+    fun storeSettings() {
+        currentSettings.apiKey = apiKey.value
+        currentSettings.darkMode = darkMode.value
+    }
 }
 
 class SettingsScreen : Screen {
@@ -50,12 +56,13 @@ class SettingsScreen : Screen {
     override fun Content() {
         val setColorScheme = LocalSetColorScheme.current
         val navigator = LocalNavigator.currentOrThrow
-        val screenModel = rememberScreenModel { SettingsModel() }
+        val screenModel = rememberScreenModel<SettingsModel>()
 
         val apiKey = remember { screenModel.apiKey }
         val darkMode = remember {
-            mutableStateOf(CurrentSettings.darkMode)
+            screenModel.darkMode
         }
+
         val expanded = remember { mutableStateOf(false) }
 
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -115,8 +122,7 @@ class SettingsScreen : Screen {
             )
             Row {
                 Button(onClick = {
-                    CurrentSettings.apiKey = apiKey.value
-                    CurrentSettings.darkMode = darkMode.value
+                    screenModel.storeSettings()
                     setColorScheme(darkMode.value)
                     navigator.pop()
                 }) {
@@ -135,7 +141,7 @@ class SettingsScreen : Screen {
 }
 
 
-object CurrentSettings {
+class CurrentSettings {
     private val settings: Settings = Settings()
 
     var darkMode: DarkModes
