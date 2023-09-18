@@ -94,6 +94,7 @@ kotlin {
                 implementation(compose.desktop.common)
                 implementation("io.ktor:ktor-client-cio:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:1.4.7")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutineVersion")
             }
         }
 
