@@ -23,17 +23,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import instanceWithArgs
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.Resource
 import org.jetbrains.compose.resources.orEmpty
 import org.jetbrains.compose.resources.rememberImageBitmap
-import org.kodein.di.compose.rememberFactory
-import org.lighthousegames.logging.logging
+import org.kodein.di.compose.localDI
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun NewsList(newsSM: NewsSM) {
-
+    val di = localDI()
     val state by newsSM.state.collectAsState()
     when (state) {
         is NewsSM.State.Loading -> {
@@ -55,9 +54,8 @@ fun NewsList(newsSM: NewsSM) {
                     Row {
                         if (!article.urlToImage.isNullOrEmpty()) {
 
-                            val resource by rememberFactory<Article, ImageLoader>()
                             val imageLoader = remember {
-                                resource(article)
+                                di.instanceWithArgs<Article, ImageLoader>(article)
                             }
                             val imageBitmap = imageLoader.rememberImageBitmap().orEmpty()
 
