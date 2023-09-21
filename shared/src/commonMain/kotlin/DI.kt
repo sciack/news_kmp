@@ -1,4 +1,3 @@
-import io.ktor.util.reflect.instanceOf
 import news.newsModule
 import org.kodein.di.DI
 import org.kodein.di.factory

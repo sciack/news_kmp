@@ -1,9 +1,6 @@
 @file:JvmName("Log")
 package android.util
 
-import kotlin.jvm.JvmName
-import kotlin.jvm.JvmStatic
-
 
 object Log {
     @JvmStatic

@@ -3,11 +3,12 @@ package news
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import kotlinx.coroutines.launch
+import news.newsapi.NewsAPI
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Resource
 import org.lighthousegames.logging.logging
 
-class NewsSM(private val settings: CurrentSettings) :
+class NewsSM(private val settings: CurrentSettings, private val newsAdapter: NewsAdapter) :
     StateScreenModel<NewsSM.State>(State.Loading) {
 
     sealed interface State {
@@ -17,23 +18,21 @@ class NewsSM(private val settings: CurrentSettings) :
 
     fun loadArticles() {
         coroutineScope.launch {
-            val newsApi = NewsAPI(settings.apiKey)
-            newsApi.topNews()
+            newsAdapter.topNews()
                 .onFailure {
                     logging().error(it) { "Error retrieving the news" }
                 }.onSuccess { topNews ->
-                    mutableState.emit(State.Loaded(topNews.articles))
+                    mutableState.emit(State.Loaded(topNews))
                 }
         }
     }
 }
 
 @OptIn(ExperimentalResourceApi::class)
-class ImageLoader(private val currentSettings: CurrentSettings, private val article: Article) :
+class ImageLoader(private val newsAdapter: NewsAdapter, private val article: Article) :
     Resource {
     override suspend fun readBytes(): ByteArray {
         logging().info { "Loading image for article: ${article.title}" }
-        val newsApi = NewsAPI(currentSettings.apiKey)
-        return newsApi.fetchArticleImage(article).getOrThrow()
+        return newsAdapter.fetchArticleImage(article).getOrThrow()
     }
 }

@@ -22,7 +22,6 @@ import news.LocalColorScheme
 import news.LocalSetColorScheme
 import news.NewsList
 import news.SettingsScreen
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.kodein.di.compose.rememberInstance
 import org.kodein.di.compose.withDI
 
