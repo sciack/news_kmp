@@ -34,7 +34,7 @@ class NewsAPITest {
             val mockClient = HttpClient(mockEngine)
             val response = NewsAPI(apiKey, mockClient).topNews()
             assertTrue(response.isSuccess)
-            assertEquals(87, response.getOrThrow().totalResults)
+            assertEquals(87, response.getOrThrow().size)
         }
     }
 

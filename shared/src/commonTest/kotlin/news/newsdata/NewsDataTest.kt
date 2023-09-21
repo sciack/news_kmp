@@ -13,7 +13,6 @@ import kotlin.test.assertTrue
 class NewsDataTest {
     private val apiKey = "fakeKey"
 
-    //"api/1/news?country=vi&category=top&apikey=YOUR_API_KEY"
     private val mockEngine = MockEngine { request ->
         assertEquals("newsdata.io", request.url.host)
         assertEquals("/api/1/news", request.url.encodedPath)
@@ -34,7 +33,7 @@ class NewsDataTest {
             val mockClient = HttpClient(mockEngine)
             val response = NewsData(apiKey, mockClient).topNews()
             assertTrue(response.isSuccess)
-            assertEquals(666, response.getOrThrow().totalResults)
+            assertEquals(50, response.getOrThrow().size)
         }
     }
 }
