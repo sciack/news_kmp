@@ -3,12 +3,11 @@ package news
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import kotlinx.coroutines.launch
-import news.newsapi.NewsAPI
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Resource
 import org.lighthousegames.logging.logging
 
-class NewsSM(private val settings: CurrentSettings, private val newsAdapter: NewsAdapter) :
+class NewsSM(private val newsAdapter: News) :
     StateScreenModel<NewsSM.State>(State.Loading) {
 
     sealed interface State {
@@ -29,7 +28,7 @@ class NewsSM(private val settings: CurrentSettings, private val newsAdapter: New
 }
 
 @OptIn(ExperimentalResourceApi::class)
-class ImageLoader(private val newsAdapter: NewsAdapter, private val article: Article) :
+class ImageLoader(private val newsAdapter: News, private val article: Article) :
     Resource {
     override suspend fun readBytes(): ByteArray {
         logging().info { "Loading image for article: ${article.title}" }

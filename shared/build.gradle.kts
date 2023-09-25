@@ -98,6 +98,12 @@ kotlin {
             }
         }
 
+
+        val desktopTest by getting {
+            dependencies {
+                implementation(compose.desktop.uiTestJUnit4)
+            }
+        }
     }
 }
 

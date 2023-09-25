@@ -10,11 +10,11 @@ import org.kodein.di.DI
 import org.kodein.di.factory
 import org.lighthousegames.logging.logging
 
-class NewsAdapter(private val settings: CurrentSettings, private val di: DI) {
+class NewsAdapter(private val settings: CurrentSettings, private val di: DI): News {
 
-    suspend fun topNews(): Result<List<Article>> {
+    override suspend fun topNews(): Result<List<Article>> {
         val apiKey = settings.apiKey
-        val newsFactory by di.factory<ApiKey, News<*>>()
+        val newsFactory by di.factory<ApiKey, NewsAPI<*>>()
         val newsApi = newsFactory(ApiKey(apiKey))
         return newsApi.topNews().map { articles ->
             articles.map { article ->
@@ -23,7 +23,7 @@ class NewsAdapter(private val settings: CurrentSettings, private val di: DI) {
         }
     }
 
-    suspend fun fetchArticleImage(article: Article) = runCatching {
+    override suspend fun fetchArticleImage(article: Article) = runCatching {
         require(!article.urlToImage.isNullOrEmpty()) {
             "Image url is null"
         }
@@ -43,6 +43,12 @@ class NewsAdapter(private val settings: CurrentSettings, private val di: DI) {
     }
 }
 
+
+interface News {
+    suspend fun topNews(): Result<List<Article>>
+
+    suspend fun fetchArticleImage(article: Article): Result<ByteArray>
+}
 
 @Serializable
 data class NewsResponse(
@@ -69,7 +75,7 @@ data class Article(
 data class Source(var id: String? = null, var name: String? = null)
 
 
-interface News<T : List<ToArticle>> {
+interface NewsAPI<T : List<ToArticle>> {
     suspend fun topNews(country: String = "vi"): Result<T>
 }
 

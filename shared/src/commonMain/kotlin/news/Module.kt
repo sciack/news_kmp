@@ -1,7 +1,5 @@
 package news
 
-import news.Article
-import news.newsapi.NewsAPI
 import news.newsdata.NewsData
 import org.kodein.di.DI
 import org.kodein.di.bind
@@ -19,7 +17,7 @@ val newsModule = DI.Module("News") {
         NewsAdapter(instance(), di)
     }
     bindProvider {
-        NewsSM(instance(), instance())
+        NewsSM(instance())
     }
     bindProvider { SettingsModel(instance()) }
 
@@ -27,7 +25,7 @@ val newsModule = DI.Module("News") {
         factory { article: Article -> ImageLoader(instance(), article) }
     }
 
-    bindFactory<ApiKey, News<*>> {
+    bindFactory<ApiKey, news.NewsAPI<*>> {
         NewsData(it.apiKey)
     }
 }

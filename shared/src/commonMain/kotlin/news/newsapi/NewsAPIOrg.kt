@@ -3,18 +3,17 @@ package news.newsapi
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import io.ktor.client.statement.readBytes
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import news.News
+import news.NewsAPI
 import news.NewsAdapter
 import news.ToArticle
 import org.lighthousegames.logging.logging
 
-class NewsAPI(private val apiKey: String, val client: HttpClient = NewsAdapter.defaultClient) :
-    News<List<Article>> {
+class NewsAPIOrg(private val apiKey: String, val client: HttpClient = NewsAdapter.defaultClient) :
+    NewsAPI<List<Article>> {
 
 
     override suspend fun topNews(country: String): Result<List<Article>> = runCatching {

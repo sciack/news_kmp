@@ -19,14 +19,14 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
 import news.Article
-import news.News
+import news.NewsAPI
 import news.NewsAdapter
 import news.Source
 import news.ToArticle
 import org.lighthousegames.logging.logging
 
 class NewsData(private val apiKey: String, val client: HttpClient = NewsAdapter.defaultClient) :
-    News<List<NewsDataArticle>> {
+    NewsAPI<List<NewsDataArticle>> {
 
 
     override suspend fun topNews(country: String): Result<List<NewsDataArticle>> = runCatching {

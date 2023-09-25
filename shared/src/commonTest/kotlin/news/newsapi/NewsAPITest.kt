@@ -32,7 +32,7 @@ class NewsAPITest {
     fun `should get the news from api`() {
         runTest {
             val mockClient = HttpClient(mockEngine)
-            val response = NewsAPI(apiKey, mockClient).topNews()
+            val response = NewsAPIOrg(apiKey, mockClient).topNews()
             assertTrue(response.isSuccess)
             assertEquals(87, response.getOrThrow().size)
         }
@@ -44,7 +44,7 @@ class NewsAPITest {
         runTest {
 
             val mockClient = HttpClient(mockEngine)
-            val response = NewsAPI("123", mockClient).topNews()
+            val response = NewsAPIOrg("123", mockClient).topNews()
             assertTrue(response.isFailure)
         }
     }
