@@ -47,7 +47,7 @@ kotlin {
                 implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
                 implementation("com.russhwolf:multiplatform-settings:1.0.0")
                 implementation("com.russhwolf:multiplatform-settings-no-arg:1.0.0")
-                implementation ("org.kodein.di:kodein-di:$kodeinVersion")
+                implementation("org.kodein.di:kodein-di:$kodeinVersion")
                 implementation("org.kodein.di:kodein-di-framework-compose:$kodeinVersion")
                 implementation("cafe.adriel.voyager:voyager-kodein:$voyagerVersion")
             }
@@ -76,7 +76,6 @@ kotlin {
         }
 
 
-
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -92,6 +91,7 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
+                implementation(compose.desktop.currentOs)
                 implementation("io.ktor:ktor-client-cio:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:1.4.7")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$coroutineVersion")
@@ -102,6 +102,7 @@ kotlin {
         val desktopTest by getting {
             dependencies {
                 implementation(compose.desktop.uiTestJUnit4)
+                implementation("com.github.javafaker:javafaker:1.0.2")
             }
         }
     }

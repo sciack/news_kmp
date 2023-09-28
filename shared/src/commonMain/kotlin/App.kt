@@ -28,7 +28,7 @@ import org.kodein.di.compose.withDI
 
 @Composable
 fun App() {
-    withDI(di) {
+    withDI(di()) {
         val currentSettings by rememberInstance<CurrentSettings>()
         val (colorScheme, setColorScheme) = remember {
             mutableStateOf(currentSettings.darkMode)

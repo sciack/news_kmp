@@ -10,7 +10,7 @@ import org.kodein.di.DI
 import org.kodein.di.factory
 import org.lighthousegames.logging.logging
 
-class NewsAdapter(private val settings: CurrentSettings, private val di: DI): News {
+class NewsAdapter(private val settings: CurrentSettings, private val di: DI) : News {
 
     override suspend fun topNews(): Result<List<Article>> {
         val apiKey = settings.apiKey

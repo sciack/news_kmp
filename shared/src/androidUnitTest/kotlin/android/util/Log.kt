@@ -1,4 +1,5 @@
 @file:JvmName("Log")
+
 package android.util
 
 
@@ -9,6 +10,7 @@ object Log {
         println("DEBUG: $tag: $newMsg")
         return 0
     }
+
     @JvmStatic
     fun i(tag: String, msg: String, ex: Throwable? = null): Int {
         val newMsg = Log.addException(ex, msg)
