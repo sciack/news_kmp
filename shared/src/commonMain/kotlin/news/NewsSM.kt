@@ -16,6 +16,7 @@ class NewsSM(private val newsAdapter: News) :
     }
 
     fun loadArticles() {
+        logging().info { "Reloading the articles"}
         coroutineScope.launch {
             newsAdapter.topNews()
                 .onFailure {
