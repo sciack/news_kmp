@@ -13,7 +13,7 @@ val newsModule = DI.Module("News") {
     bindSingleton {
         CurrentSettings()
     }
-    bindSingleton {
+    bindSingleton<News> {
         NewsAdapter(instance(), di)
     }
     bindProvider {
