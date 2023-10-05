@@ -1,0 +1,58 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+note "Kodein will inject the private properties" as n1
+
+interface News {
+    public List<Article> fetchNews
+}
+
+class TestNews <<Test>> {
+}
+
+News <|-- TestNews
+
+class NewsAdapter {
+    private NewsApi news
+    private Settings settings
+
+    public List<Article> fetchNews()
+    public byte[] fetchArticleImage(Article article)
+}
+
+News <|-- NewsAdapter
+
+note top of NewsAdapter: News is not really private, \n will be created at runtime using kodein factory
+
+interface NewsApi {
+    public List<Article> topNews()
+}
+
+class NewsAPIOrg {
+    public HttpClient httpClient
+    public List<Article> topNews()
+}
+
+class NewsData {
+    public HttpClient httpClient
+    public List<Article> topNews()
+}
+
+NewsApi <|-- NewsAPIOrg
+NewsApi <|-- NewsData
+
+NewsAdapter - NewsApi
+
+
+class NewsSM {
+    private News news
+    public Flow<State>: state
+    public loadArticles()
+}
+
+StateScreenModel <|-- NewsSM
+
+
+NewsSM - News
+
+@enduml
