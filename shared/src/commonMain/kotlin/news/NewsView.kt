@@ -52,9 +52,9 @@ fun NewsList(newsSM: NewsSM) {
 
         is NewsSM.State.Loaded -> {
             val topNews = (state as NewsSM.State.Loaded).articles
-            val isRefreshing by remember { mutableStateOf(false) }
+            val isRefreshing = remember { newsSM.isRefreshing }
             val pullRefreshState = rememberPullRefreshState(
-                refreshing = isRefreshing,
+                refreshing = isRefreshing.value,
                 onRefresh = {
                     newsSM.loadArticles()
                 }
@@ -97,7 +97,7 @@ fun NewsList(newsSM: NewsSM) {
                     }
                 }
                 PullRefreshIndicator(
-                    refreshing = isRefreshing,
+                    refreshing = isRefreshing.value,
                     state = pullRefreshState,
                     modifier = Modifier.align(Alignment.TopCenter)
                 )

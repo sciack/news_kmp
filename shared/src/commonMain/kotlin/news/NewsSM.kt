@@ -1,7 +1,9 @@
 package news
 
+import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.Resource
@@ -9,6 +11,7 @@ import org.lighthousegames.logging.logging
 
 class NewsSM(private val newsAdapter: News) :
     StateScreenModel<NewsSM.State>(State.Loading) {
+    val isRefreshing = mutableStateOf(false)
 
     sealed interface State {
         data object Loading : State
@@ -16,12 +19,14 @@ class NewsSM(private val newsAdapter: News) :
     }
 
     fun loadArticles() {
-        logging().info { "Reloading the articles"}
         coroutineScope.launch {
+            isRefreshing.value = true
             newsAdapter.topNews()
                 .onFailure {
+                    isRefreshing.value = false
                     logging().error(it) { "Error retrieving the news" }
                 }.onSuccess { topNews ->
+                    isRefreshing.value = false
                     mutableState.emit(State.Loaded(topNews))
                 }
         }
